@@ -125,6 +125,7 @@ def hole_spielplan(datum=None):
 def hole_espn_pool(tage, ligen=KANDIDATEN):
     """Alle ESPN-Spiele der Tage aus allen Kandidatenligen einsammeln."""
     auftraege = [(l, t) for l in ligen for t in tage]
+    fehler = []
 
     def eines(auftrag):
         liga, tag = auftrag
@@ -132,7 +133,8 @@ def hole_espn_pool(tage, ligen=KANDIDATEN):
                f"{liga}/scoreboard?dates={tag}")
         try:
             daten = json.loads(_hole(url, UA_ESPN))
-        except Exception:
+        except Exception as e:
+            fehler.append(f"{liga} {tag}: {e}")
             return []
         treffer = []
         for e in daten.get("events", []):
@@ -152,7 +154,11 @@ def hole_espn_pool(tage, ligen=KANDIDATEN):
         return treffer
 
     with ThreadPoolExecutor(max_workers=12) as pool:
-        return [e for teil in pool.map(eines, auftraege) for e in teil]
+        pool_ = [e for teil in pool.map(eines, auftraege) for e in teil]
+    # Einzelne Ligen ohne Spieltag sind normal; scheitern alle, liegt es an ESPN.
+    if len(fehler) == len(auftraege):
+        raise SystemExit(f"ESPN nicht erreichbar ({len(fehler)} Abrufe) — z. B. {fehler[0]}")
+    return pool_
 
 
 def _aehnlich(a, b):
