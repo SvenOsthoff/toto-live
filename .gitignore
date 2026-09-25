@@ -1,0 +1,10 @@
+# Bleibt lokal: Quittungs-Screenshots und Projektnotizen enthalten Los-,
+# Quittungs- und Kundennummern — das Repository ist öffentlich.
+IMG_*.PNG
+IMG_*.png
+CLAUDE.md
+.claude/
+
+__pycache__/
+.DS_Store
+stand.json

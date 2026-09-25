@@ -1,0 +1,14 @@
+{
+ "name": "TOTO 13er Ergebniswette — Live-Stand",
+ "short_name": "TOTO Live",
+ "lang": "de",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#f3f4f5",
+ "theme_color": "#009738",
+ "icons": [
+  {"src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
+  {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+ ]
+}

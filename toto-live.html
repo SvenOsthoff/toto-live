@@ -1,0 +1,1382 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#009738">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="TOTO Live">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>TOTO Wettscheine</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap">
+<style>
+/* Farb-, Typo- und Maß-Token nach dem Styleguide von Lotto Niedersachsen
+   (--tln-base-* / --tln-sem-*), hier unter kurzen Namen. */
+:root{
+  /* TOTO-Produktfarben */
+  --toto-green:#009738;
+  --toto-green02:#00ae40;
+  --toto-green03:#00802f;
+  --toto-green04:#065729;
+
+  /* Neutrale Skala */
+  --white:#fff;
+  --gray-50:#f3f4f5;
+  --gray-100:#edeef0;
+  --gray-200:#e4e7ea;
+  --gray-300:#dfe2e5;
+  --gray-400:#d7dbdf;
+  --gray-500:#c4c7cb;
+  --gray-600:#999b9e;
+  --gray-700:#5c5e60;
+  --gray-900:#1b1b1b;
+
+  /* Systemfarben */
+  --success:#33a904;
+  --success-variant:#ebf6e6;
+  --on-success-variant:#1c5d02;
+  --error:#a50d0d;
+  --error-variant:#fde7e7;
+  --on-error-variant:#800a0a;
+  --warning:#ff872b;
+  --warning-variant:#fff3ea;
+  --on-warning-variant:#6b3912;
+  --info:#c9e9f7;
+  --info-variant:#eef8fd;
+  --on-info:#306075;
+
+  /* Semantisch */
+  --background:var(--gray-50);
+  --surface:var(--white);
+  --on-surface:var(--gray-900);
+  --on-surface-v1:var(--gray-700);
+  --on-surface-v2:var(--gray-500);
+  --line:var(--gray-300);
+  --shadow:0 2px 8px #0000001a;
+
+  /* Maße */
+  --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px; --r-full:9999px;
+  --s-xs:4px; --s-sm:8px; --s-md:12px; --s-lg:16px; --s-xl:24px; --s-2xl:32px;
+
+  /* Schrift: primär Figtree (Überschriften, Zahlen, Buttons),
+     sekundär Open Sans (Fließtext) */
+  --f-primary:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --f-secondary:"Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{
+  margin:0;
+  background:var(--background);
+  color:var(--on-surface);
+  font:normal 400 16px/150% var(--f-secondary);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:680px;margin:0 auto;padding-inline:var(--s-lg);padding-block:var(--s-lg) var(--s-2xl)}
+
+/* ---------- Spielschein ---------- */
+.schein{
+  background:var(--surface);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  margin-bottom:var(--s-lg);
+}
+
+/* Produktkopf: game-surface = toto-green, on-game-surface = white */
+.kopf{background:var(--toto-green);color:var(--white);padding:var(--s-lg) var(--s-lg) var(--s-md)}
+.produkt{
+  font:normal 800 22px/1.15 var(--f-primary);
+  letter-spacing:-.01em;margin:0;
+  display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+}
+.produkt em{font:normal 700 13px/1.2 var(--f-primary);font-style:normal;opacity:.92}
+.kopf-zeile{
+  margin-top:var(--s-sm);
+  font:normal 400 13px/150% var(--f-secondary);
+  color:#ffffffeb;
+  display:flex;gap:var(--s-sm) var(--s-md);flex-wrap:wrap;align-items:center;
+}
+.pill{
+  display:inline-block;
+  background:#ffffff26;border:1px solid #ffffff59;
+  border-radius:var(--r-full);
+  padding:2px 10px;
+  font:normal 600 12px/1.6 var(--f-primary);
+  color:var(--white);
+}
+.pill.hell{background:var(--white);color:var(--toto-green04);border-color:var(--white)}
+
+/* Scheindaten */
+.daten{
+  margin:0;
+  padding:var(--s-md) var(--s-lg);
+  background:var(--gray-50);
+  border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:var(--s-sm) var(--s-lg);
+}
+.daten div{min-width:0}
+.daten dt{font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1);margin:0}
+.daten dd{font:normal 600 14px/150% var(--f-primary);color:var(--on-surface);margin:0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+
+/* ---------- Stand ---------- */
+.stand{padding:var(--s-lg)}
+.stand-kopf{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s-lg);flex-wrap:wrap}
+.label{font:normal 700 14px/1.2 var(--f-primary);color:var(--on-surface);text-transform:uppercase;letter-spacing:.04em;margin:0}
+.unterlabel{font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1);margin:2px 0 0}
+.zaehler{font-family:var(--f-primary);font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap}
+.zaehler b{font-weight:800;font-size:44px;color:var(--toto-green)}
+.zaehler span{font-weight:600;font-size:20px;color:var(--on-surface-v2)}
+
+.reihe-titel{
+  margin:var(--s-lg) 0 var(--s-sm);
+  font:normal 700 14px/1.2 var(--f-primary);color:var(--on-surface);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s-sm);
+}
+.reihe-titel small{font:normal 400 12px/1.2 var(--f-secondary);color:var(--on-surface-v1);margin-left:var(--s-sm)}
+button.klein{
+  font:normal 600 12px/1 var(--f-primary);
+  background:var(--white);color:var(--toto-green);
+  border:2px solid var(--toto-green);border-radius:var(--r-full);
+  padding:6px 14px;cursor:pointer;
+}
+button.klein:hover{background:var(--success-variant)}
+button.klein:focus-visible{outline:3px solid var(--toto-green04);outline-offset:2px}
+button.klein.aktiv{background:var(--toto-green);color:var(--white)}
+button.klein.gefahr{color:var(--error);border-color:var(--error)}
+button.klein.gefahr:hover{background:var(--error-variant)}
+button.klein.gefahr.aktiv{background:var(--error);color:var(--white)}
+
+/* Schnelleingabe der ganzen Reihe */
+.schnell{
+  margin-top:var(--s-md);padding:var(--s-md);
+  background:var(--gray-50);border-radius:var(--r-sm);
+  display:flex;gap:var(--s-sm);flex-wrap:wrap;align-items:center;
+}
+.schnell label{font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1);flex:1 1 100%}
+.schnell input{
+  flex:1 1 180px;min-width:0;
+  font:normal 600 16px/1 var(--f-primary);letter-spacing:.08em;
+  padding:10px 12px;border:2px solid var(--gray-300);border-radius:var(--r-sm);
+  background:var(--white);color:var(--on-surface);
+}
+.schnell input:focus-visible{outline:none;border-color:var(--toto-green)}
+.fehler{flex:1 1 100%;font:normal 600 12px/150% var(--f-secondary);color:var(--on-error-variant)}
+.notiz{flex:1 1 100%;font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1)}
+
+.speicherstand{
+  margin:0 0 var(--s-lg);
+  font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1);
+}
+.reihe{display:flex;gap:5px}
+.zelle{
+  flex:1 1 0;min-width:0;aspect-ratio:1/1;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--r-full);
+  font:normal 700 clamp(12px,3.2vw,16px)/1 var(--f-primary);
+  background:var(--gray-100);color:var(--gray-600);
+  border:2px solid transparent;
+}
+/* Zweiweg/Dreiweg: mehrere Zeichen in einer Zelle, kleiner gesetzt */
+.zelle.zw{font-size:clamp(9px,2.5vw,13px);letter-spacing:-.02em}
+.zelle.dw{font-size:clamp(8px,2vw,11px);letter-spacing:-.04em}
+.zelle.z-in-hit{background:var(--warning);color:var(--white)}
+.zelle.z-in-miss{background:var(--warning-variant);color:var(--on-warning-variant);border-color:var(--warning)}
+.zelle.z-post-hit{background:var(--toto-green);color:var(--white)}
+.zelle.z-post-miss{background:var(--error-variant);color:var(--on-error-variant);border-color:var(--error)}
+
+.legende{display:flex;gap:var(--s-md);flex-wrap:wrap}
+.legende span{
+  display:inline-flex;align-items:center;gap:6px;
+  font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1);
+}
+.punkt{width:12px;height:12px;border-radius:var(--r-full);flex:none;border:2px solid transparent}
+.p-pre{background:var(--gray-100)}
+.p-live{background:var(--warning)}
+.p-hit{background:var(--toto-green)}
+.p-miss{background:var(--error-variant);border-color:var(--error)}
+
+.hinweis{
+  margin:var(--s-lg) 0 0;padding:var(--s-md);
+  border-radius:var(--r-sm);
+  background:var(--info-variant);color:var(--on-info);
+  font:normal 400 14px/150% var(--f-secondary);
+}
+.hinweis strong{font-weight:700}
+.hinweis.raus{background:var(--error-variant);color:var(--on-error-variant)}
+.hinweis.gut{background:var(--success-variant);color:var(--on-success-variant)}
+
+.schein-aktionen{
+  display:flex;gap:var(--s-sm);flex-wrap:wrap;justify-content:flex-end;
+  margin-top:var(--s-md);
+}
+
+/* Gemeinsame Leiste: Legende, Quelle, Aktualisieren */
+.leiste{
+  background:var(--surface);border-radius:var(--r-md);box-shadow:var(--shadow);
+  padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-lg);
+}
+.quelle{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s-md);flex-wrap:wrap;
+  margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--line);
+}
+.quelle-text{font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1);font-variant-numeric:tabular-nums}
+.quelle.warn .quelle-text{color:var(--on-warning-variant)}
+button.neu{
+  font:normal 600 14px/1 var(--f-primary);
+  background:var(--toto-green);color:var(--white);
+  border:none;border-radius:var(--r-full);
+  padding:10px 20px;cursor:pointer;
+}
+button.neu:hover{background:var(--toto-green03)}
+button.neu:focus-visible{outline:3px solid var(--toto-green04);outline-offset:2px}
+button.neu[disabled]{background:var(--gray-100);color:var(--gray-600);cursor:default}
+
+/* Neuer Schein */
+.neuer-schein{margin-bottom:var(--s-sm)}
+.formular{
+  margin-top:var(--s-md);padding:var(--s-lg);
+  background:var(--surface);border-radius:var(--r-md);box-shadow:var(--shadow);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:var(--s-md);
+}
+.formular .label,.formular .breit,.formular .knoepfe,.formular .fehler{grid-column:1/-1}
+.formular label{display:flex;flex-direction:column;gap:4px;font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1)}
+.formular input{
+  min-width:0;
+  font:normal 600 16px/1 var(--f-primary);
+  padding:10px 12px;border:2px solid var(--gray-300);border-radius:var(--r-sm);
+  background:var(--white);color:var(--on-surface);
+}
+.formular input:focus-visible{outline:none;border-color:var(--toto-green)}
+.knoepfe{display:flex;gap:var(--s-sm);flex-wrap:wrap;align-items:center}
+.leer-hinweis{
+  background:var(--surface);border-radius:var(--r-md);box-shadow:var(--shadow);
+  padding:var(--s-lg);margin:0 0 var(--s-lg);
+  font:normal 400 14px/150% var(--f-secondary);color:var(--on-surface-v1);
+}
+
+/* Bearbeiten-Leiste über der Spielliste */
+.bearbeit-leiste{
+  position:sticky;top:0;z-index:2;
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s-md);
+  background:var(--toto-green04);color:var(--white);
+  border-radius:var(--r-md);padding:var(--s-sm) var(--s-sm) var(--s-sm) var(--s-lg);
+  margin-bottom:var(--s-md);box-shadow:var(--shadow);
+  font:normal 600 14px/1.3 var(--f-primary);
+}
+.bearbeit-leiste small{display:block;font:normal 400 12px/1.4 var(--f-secondary);opacity:.9}
+.bearbeit-leiste button.klein{background:var(--white);border-color:var(--white);color:var(--toto-green04)}
+
+/* ---------- Spieltag ---------- */
+.tag{
+  margin:var(--s-xl) 0 var(--s-md);
+  font:normal 700 18px/1.2 var(--f-primary);color:var(--on-surface);
+}
+.tag span{font:normal 400 14px/150% var(--f-secondary);color:var(--on-surface-v1);margin-left:var(--s-sm)}
+
+/* ---------- Spielkarte ---------- */
+.spiel{
+  background:var(--surface);
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow);
+  padding:var(--s-md) var(--s-lg) var(--s-md);
+  margin-bottom:var(--s-md);
+}
+.spiel-kopf{
+  display:flex;align-items:center;gap:var(--s-sm);
+  font:normal 400 12px/150% var(--f-secondary);color:var(--on-surface-v1);
+  margin-bottom:var(--s-sm);
+}
+.nr{
+  flex:none;width:22px;height:22px;border-radius:var(--r-full);
+  background:var(--gray-700);color:var(--white);
+  font:normal 700 12px/1 var(--f-primary);
+  display:flex;align-items:center;justify-content:center;
+  font-variant-numeric:tabular-nums;
+}
+.spiel-kopf .liga{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spiel-kopf .zeit{flex:none;font-variant-numeric:tabular-nums}
+
+.status{
+  flex:none;display:inline-flex;align-items:center;gap:5px;
+  border-radius:var(--r-full);padding:3px 10px;
+  font:normal 700 11px/1.4 var(--f-primary);letter-spacing:.02em;
+}
+.st-pre{background:var(--gray-100);color:var(--gray-700)}
+.st-in{background:var(--warning-variant);color:var(--on-warning-variant)}
+.st-post{background:var(--gray-700);color:var(--white)}
+.st-in::before{
+  content:"";width:7px;height:7px;border-radius:var(--r-full);background:var(--warning);
+  animation:puls 1.6s ease-in-out infinite;
+}
+@keyframes puls{0%,100%{opacity:1}50%{opacity:.2}}
+@media (prefers-reduced-motion:reduce){.st-in::before{animation:none}}
+
+.mannschaften{display:flex;flex-direction:column;gap:2px}
+.mann{display:flex;align-items:baseline;gap:var(--s-md)}
+.mann .name{
+  flex:1;min-width:0;
+  font:normal 400 16px/1.4 var(--f-secondary);color:var(--on-surface);
+}
+.mann.sieger .name{font-weight:700}
+.mann .tor{
+  flex:none;width:28px;text-align:right;
+  font:normal 700 20px/1.4 var(--f-primary);
+  font-variant-numeric:tabular-nums;color:var(--on-surface);
+}
+.spiel.s-pre .mann .tor{color:var(--gray-500);font-weight:600}
+
+.fuss{
+  display:flex;align-items:center;gap:var(--s-md);flex-wrap:wrap;
+  margin-top:var(--s-md);padding-top:var(--s-sm);border-top:1px solid var(--gray-100);
+}
+.tendenz{
+  display:flex;flex:1 1 130px;min-width:110px;max-width:200px;
+  height:18px;border-radius:var(--r-xs);overflow:hidden;gap:2px;
+}
+.tendenz .t{
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  font:normal 700 10px/1 var(--f-primary);color:var(--white);
+}
+.tendenz .t1{background:var(--toto-green)}
+.tendenz .t0{background:var(--gray-500);color:var(--gray-900)}
+.tendenz .t2{background:var(--toto-green04)}
+
+/* Tippwahl 1/0/2 je Spiel — Schalter; mehrere aktiv = Zweiweg/Dreiweg */
+.tippwahl{display:flex;gap:6px;margin-left:auto}
+.tw{
+  width:40px;height:36px;flex:none;
+  font:normal 700 16px/1 var(--f-primary);
+  background:var(--white);color:var(--on-surface);
+  border:2px solid var(--gray-300);border-radius:var(--r-sm);
+  cursor:pointer;
+}
+.tw:hover{border-color:var(--toto-green)}
+.tw:focus-visible{outline:3px solid var(--toto-green04);outline-offset:2px}
+.tw.aktiv{background:var(--toto-green);border-color:var(--toto-green);color:var(--white)}
+
+.tipps{display:flex;align-items:center;gap:6px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.tipps .cap{font:normal 400 11px/1.4 var(--f-secondary);color:var(--on-surface-v1)}
+.chip{
+  width:28px;height:28px;flex:none;border-radius:var(--r-full);
+  display:flex;align-items:center;justify-content:center;
+  font:normal 700 14px/1 var(--f-primary);
+}
+.chip.ist{background:var(--gray-700);color:var(--white)}
+.spiel.s-pre .chip.ist{background:var(--gray-100);color:var(--gray-600)}
+.spiel.s-in .chip.ist{background:var(--warning);color:var(--white)}
+
+/* Tipp-Chip je Schein/Tipp: kleines Kürzel + Zeichen */
+.tc{
+  display:inline-flex;align-items:center;gap:5px;flex:none;
+  height:28px;padding:0 10px 0 8px;border-radius:var(--r-full);
+  background:var(--white);color:var(--toto-green);border:2px solid var(--toto-green);
+  font:normal 700 14px/1 var(--f-primary);font-variant-numeric:tabular-nums;
+}
+.tc small{font:normal 600 10px/1 var(--f-primary);color:var(--on-surface-v1)}
+.tc.leer{color:var(--gray-600);border-color:var(--gray-400)}
+.tc.in-hit{background:var(--warning);border-color:var(--warning);color:var(--white)}
+.tc.in-miss{background:var(--warning-variant);border-color:var(--warning);color:var(--on-warning-variant)}
+.tc.post-hit{background:var(--toto-green);border-color:var(--toto-green);color:var(--white)}
+.tc.post-miss{background:var(--error-variant);border-color:var(--error);color:var(--on-error-variant)}
+.tc.in-hit small,.tc.post-hit small{color:#ffffffd9}
+.tc.fest{border-style:dashed}
+
+@media (max-width:420px){
+  .wrap{padding-inline:var(--s-lg)}
+  .zaehler b{font-size:38px}
+  .tendenz{max-width:none;flex-basis:100%;order:2}
+  .tipps{margin-left:0;order:1;width:100%;justify-content:flex-start}
+  .tippwahl{margin-left:0;order:1}
+}
+
+footer{
+  margin-top:var(--s-xl);
+  background:var(--surface);border-radius:var(--r-md);
+  padding:var(--s-lg);box-shadow:var(--shadow);
+  font:normal 400 12px/160% var(--f-secondary);color:var(--on-surface-v1);
+}
+footer p{margin:0 0 var(--s-sm)}
+footer p:last-child{margin-bottom:0}
+footer strong{color:var(--on-surface);font-weight:700}
+</style>
+
+<div class="wrap">
+
+  <div id="scheine"></div>
+
+  <p class="speicherstand" id="s-speicher"></p>
+
+  <div class="neuer-schein">
+    <button class="klein" id="n-oeffnen" type="button">+ Neuer Schein</button>
+    <form class="formular" id="n-form" hidden>
+      <p class="label">Neuer Schein</p>
+      <label>Losnummer<input id="n-los" inputmode="numeric" autocomplete="off"></label>
+      <label>Quittungsnummer<input id="n-quittung" inputmode="numeric" autocomplete="off"></label>
+      <label>Einsatz<input id="n-einsatz" autocomplete="off" placeholder="1,60 €"></label>
+      <label class="breit">1. Tipp — 13 Positionen wie auf der Quittung. Zweiweg und Dreiweg
+        als mehrere Ziffern, etwa „1 02 1 2 …“ oder wie in der App „1-- -02 1-- …“.
+        Leer lassen, um die Tipps danach einzeln anzutippen.
+        <input id="n-reihe" autocomplete="off" placeholder="1-- -02 1-- --2 …"></label>
+      <span class="fehler" id="n-fehler" hidden></span>
+      <div class="knoepfe">
+        <button class="neu" type="submit">Schein anlegen</button>
+        <button class="klein" id="n-abbrechen" type="button">Abbrechen</button>
+      </div>
+    </form>
+  </div>
+
+  <section class="leiste" aria-live="polite">
+    <div class="legende">
+      <span><i class="punkt p-pre"></i>offen</span>
+      <span><i class="punkt p-live"></i>läuft</span>
+      <span><i class="punkt p-hit"></i>Treffer</span>
+      <span><i class="punkt p-miss"></i>Fehltipp</span>
+    </div>
+    <div class="quelle" id="s-quelle">
+      <span class="quelle-text" id="s-quelle-text">Lade Spieldaten …</span>
+      <button class="neu" id="s-neu" type="button">Aktualisieren</button>
+    </div>
+  </section>
+
+  <div class="bearbeit-leiste" id="b-leiste" hidden>
+    <span id="b-text"></span>
+    <button class="klein" id="b-fertig" type="button">Fertig</button>
+  </div>
+
+  <main id="liste"></main>
+
+  <footer>
+    <p><strong>Inoffiziell — alle Angaben ohne Gewähr.</strong> Diese Seite ist ein privates
+    Hilfsmittel und stammt nicht von einer Lotteriegesellschaft. Maßgeblich ist allein die
+    offizielle Gewinnermittlung.</p>
+    <p>Gewertet wird das Ergebnis nach 90 Minuten inklusive Nachspielzeit; Verlängerung und
+    Elfmeterschießen zählen nicht.</p>
+    <p>Bei Systemtipps zählt als Stand die beste Tippreihe; nach Spielende nennt die Seite,
+    wie viele Tippreihen welche Gewinnklasse erreichen.</p>
+    <p>Spielstände über die öffentliche ESPN-Scoreboard-Schnittstelle. Die Spielpaarungen der
+    Wettrunde sind fest hinterlegt.</p>
+  </footer>
+
+</div>
+
+<script>
+"use strict";
+
+/* ========== Die Wettrunde ==========
+
+   Rundendaten und Paarungen stehen in spiele.json — derselben Datei, aus der
+   auch stand-holen.py liest. Dort steht unter "scheine" auch der Ausgangswert
+   der Scheine; gepflegt werden sie aber in der Seite (Schein-Speicher).
+
+   Felder je Spiel: nr, heim, gast, id (ESPN-Event-ID), liga (Schlüssel in
+   ligen), anstoss (UTC), tendenz (Wetttendenz [1,0,2]).
+
+   Ein Schein: {id, los, quittung, einsatz, reihen: [{tipps: {nr: zeichen}}]}.
+   zeichen ist "1", "0", "2" — oder mehrere davon (Zweiweg "02", Dreiweg "102"),
+   immer in der Reihenfolge 1-0-2. Leer heißt: kein Tipp.  */
+
+let RUNDE = {};
+let SPIELE = [];
+let LIGEN = {};
+let TAGE = [];
+let SCHEINE_START = [];
+
+async function ladeRunde() {
+  const r = await fetch("spiele.json", {cache: "no-store"});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+
+/* ========== Toto-Logik ========== */
+
+/** Spielstand -> Toto-Zeichen. 1 Heimsieg, 0 Unentschieden, 2 Auswärtssieg. */
+function tendenzZeichen(heim, gast) {
+  if (heim > gast) return "1";
+  if (heim < gast) return "2";
+  return "0";
+}
+
+/** Beliebige Eingabe -> Zeichenkette aus 1/0/2 in fester Reihenfolge, ohne Doppelte. */
+function ordneZeichen(s) {
+  return ["1", "0", "2"].filter((z) => String(s || "").includes(z)).join("");
+}
+
+/** Wie viele Tippreihen ein Tipp umfasst: Produkt der Zeichenzahl je Spiel. */
+function anzahlReihen(reihe) {
+  return SPIELE.reduce((n, sp) => n * Math.max(1, (reihe.tipps[sp.nr] || "").length), 1);
+}
+
+function istSystem(schein) {
+  return schein.reihen.some((r) => SPIELE.some((sp) => (r.tipps[sp.nr] || "").length > 1));
+}
+
+function scheinArt(schein) {
+  const n = schein.reihen.reduce((s, r) => s + anzahlReihen(r), 0);
+  return (istSystem(schein) ? "Systemschein" : "Normalschein") + " · " + n +
+         (n === 1 ? " Tippreihe" : " Tippreihen");
+}
+
+/** Ein Spiel + sein Live-Zustand -> Zustand und Ergebniszeichen. */
+function lage(spiel) {
+  const live = stand_daten[spiel.id];
+  const zustand = live ? live.state : "pre";
+  const gespielt = zustand === "in" || zustand === "post";
+  return {zustand, ist: gespielt ? tendenzZeichen(live.heim, live.gast) : null, live};
+}
+
+/** Lage + getippte Zeichen -> Bewertung. Treffer, wenn das Ergebnis unter den
+    Zeichen ist. Ohne Tipp ist nichts zu werten — etwa bei einer frischen Runde. */
+function bewerte(l, zeichen) {
+  const treffer = (l.ist === null || !zeichen) ? null : zeichen.includes(l.ist);
+  return {zustand: l.zustand, ist: l.ist, treffer, zeichen};
+}
+
+/** Stand eines Tipps. Bei Systemtipps ist das die beste Tippreihe: Ein Spiel
+    zählt als richtig, wenn das Ergebnis unter den Zeichen ist. */
+function stand(bewertungen) {
+  let richtig = 0, fehl = 0, beendet = 0, laeuft = 0, livePlus = 0, ohneTipp = 0;
+  const gesamt = bewertungen.length;
+  for (const b of bewertungen) {
+    if (b.treffer === null && b.zustand !== "pre") ohneTipp++;
+    if (b.zustand === "post") {
+      beendet++;
+      if (b.treffer === true) { richtig++; livePlus++; }
+      else if (b.treffer === false) { fehl++; }
+    } else if (b.zustand === "in") {
+      laeuft++;
+      if (b.treffer === true) livePlus++;
+    }
+  }
+  return {richtig, fehl, beendet, laeuft, livePlus, ohneTipp, gesamt,
+          offen: gesamt - beendet, maxMoeglich: gesamt - fehl};
+}
+
+/** Verteilung der Richtigen über alle Tippreihen eines (System-)Tipps, nur aus
+    beendeten Spielen: Produkt der Polynome (Fehlzeichen + Trefferzeichen·x).
+    verteilung[k] = Zahl der Tippreihen mit k Richtigen. */
+function gewinnreihen(bewertungen) {
+  let v = [1];
+  for (const b of bewertungen) {
+    if (b.zustand !== "post") continue;
+    const k = b.zeichen.length;
+    const hit = b.treffer ? 1 : 0;
+    const neu = new Array(v.length + 1).fill(0);
+    v.forEach((n, j) => { neu[j] += n * (k - hit); neu[j + 1] += n * hit; });
+    v = neu;
+  }
+  return v;
+}
+
+/* ========== Datenquellen ========== */
+
+/* 1) Direkt von ESPN — funktioniert überall, wo die Seite ohne strenge
+      Content-Security-Policy läuft (lokal geöffnet, eigener Server). */
+async function holeESPN() {
+  const urls = [];
+  for (const k of Object.keys(LIGEN))
+    for (const tag of TAGE)
+      urls.push("https://site.api.espn.com/apis/site/v2/sports/soccer/" +
+                LIGEN[k].slug + "/scoreboard?dates=" + tag);
+
+  const antworten = await Promise.all(urls.map(async (u) => {
+    const r = await fetch(u, {cache: "no-store"});
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  }));
+
+  const map = {};
+  for (const daten of antworten) {
+    for (const e of (daten.events || [])) {
+      const c = e.competitions && e.competitions[0];
+      if (!c) continue;
+      const h = c.competitors.find((x) => x.homeAway === "home");
+      const a = c.competitors.find((x) => x.homeAway === "away");
+      const t = c.status.type;
+      map[e.id] = {
+        state: t.state,
+        detail: t.shortDetail || t.detail || "",
+        clock: c.status.displayClock || "",
+        heim: h ? Number(h.score) : 0,
+        gast: a ? Number(a.score) : 0
+      };
+    }
+  }
+  return map;
+}
+
+/* 2) Über den Artifact-Datenspeicher — dort liegen die Stände, wenn die
+      Seite veröffentlicht ist und externe Abrufe blockiert werden. Und dort
+      liegen die Scheine, damit sie auf allen Geräten gelten. */
+let DB = null;
+
+async function verbindeDB(beiStand, beiScheinen) {
+  if (!window.claude || typeof window.claude.use !== "function") return null;
+  try { DB = await window.claude.use("db"); } catch (e) { return null; }
+  if (!DB) return null;
+  try {
+    DB.doc("live/stand").onSnapshot(
+      (snap) => { if (snap.exists) beiStand(snap.data()); },
+      () => {}
+    );
+    DB.doc(scheinPfad()).onSnapshot(
+      (snap) => { if (snap.exists) beiScheinen(snap.data()); },
+      () => {}
+    );
+  } catch (e) { return null; }
+  return DB;
+}
+
+/* ========== Scheine ========== */
+
+let SCHEINE = [];
+let tippQuelle = "";         // Text für die Speicherzeile
+
+/** Je Wettrunde ein eigenes Dokument, damit alte Runden erhalten bleiben. */
+function rundenSchluessel() { return TAGE.join("-"); }
+function scheinPfad() { return "tipps/" + rundenSchluessel(); }
+
+/** Frühere Fassung: {tipps: {nr: "1"}} für genau einen Schein. Daraus wird der
+    erste Schein aus spiele.json mit diesen Tipps; die übrigen bleiben. */
+function ausAltemFormat(tipps) {
+  const scheine = JSON.parse(JSON.stringify(SCHEINE_START));
+  if (!scheine.length) scheine.push({id: "s1", los: "", quittung: "", einsatz: "", reihen: [{tipps: {}}]});
+  for (const [nr, z] of Object.entries(tipps)) {
+    if (z) scheine[0].reihen[0].tipps[nr] = ordneZeichen(z);
+  }
+  return scheine;
+}
+
+function ausSpeicher() {
+  try {
+    const roh = localStorage.getItem("toto-scheine-" + rundenSchluessel());
+    if (roh) return JSON.parse(roh);
+    const alt = localStorage.getItem("toto-tipps-" + rundenSchluessel());
+    if (alt) return ausAltemFormat(JSON.parse(alt));
+  } catch (e) { /* privates Fenster, blockierte Daten — egal */ }
+  return null;
+}
+
+function inSpeicher() {
+  try {
+    localStorage.setItem("toto-scheine-" + rundenSchluessel(), JSON.stringify(SCHEINE));
+  } catch (e) { /* nicht schlimm, der Schein-Speicher ist die eigentliche Ablage */ }
+}
+
+/** Scheine sichern: in den Schein-Speicher (geräteübergreifend) und lokal. */
+async function speichereScheine() {
+  inSpeicher();
+  if (!DB) {
+    tippQuelle = "Scheine nur auf diesem Gerät gespeichert.";
+    zeigeSpeicherstand();
+    return;
+  }
+  try {
+    await DB.doc(scheinPfad()).set({
+      scheine: SCHEINE,
+      aktualisiert: new Date().toISOString()
+    });
+    tippQuelle = "Scheine gespeichert — gelten auf allen Ihren Geräten.";
+  } catch (e) {
+    tippQuelle = "Konnte nicht geräteübergreifend gespeichert werden — " +
+                 "die Scheine liegen nur auf diesem Gerät.";
+  }
+  zeigeSpeicherstand();
+}
+
+/** Tipps, die gerade erst angelegt wurden, dürfen auch schon angepfiffene
+    Spiele füllen — der Schein wurde vor Anpfiff gekauft und muss eintragbar
+    sein. Gilt nur, bis das Bearbeiten beendet ist. */
+const frisch = new Set();   // "scheinId:reihenIndex"
+
+/** Ab Anpfiff ist der Tipp eingefroren — die Seite soll den Stand abbilden,
+    nicht nachträglich schöngerechnet werden können. Die Anstoßzeit zählt auch
+    dann, wenn noch keine Live-Daten vorliegen. */
+function istGesperrt(spiel, schluessel) {
+  if (schluessel && frisch.has(schluessel)) return false;
+  const live = stand_daten[spiel.id];
+  if (live && live.state !== "pre") return true;
+  const anpfiff = Date.parse(spiel.anstoss);
+  return Number.isFinite(anpfiff) && Date.now() >= anpfiff;
+}
+
+function scheinVon(id) { return SCHEINE.find((s) => s.id === id); }
+function bearbeiteteReihe() {
+  if (!bearbeiten) return null;
+  const s = scheinVon(bearbeiten.schein);
+  return s ? s.reihen[bearbeiten.reihe] || null : null;
+}
+function bearbeitSchluessel() { return bearbeiten ? bearbeiten.schein + ":" + bearbeiten.reihe : ""; }
+
+/** 1/0/2 an- oder abschalten. Mehrere aktiv = Zweiweg bzw. Dreiweg. */
+function schalteZeichen(nr, wert) {
+  const reihe = bearbeiteteReihe();
+  const spiel = SPIELE.find((sp) => sp.nr === nr);
+  if (!reihe || !spiel || istGesperrt(spiel, bearbeitSchluessel())) return;
+  const alt = reihe.tipps[nr] || "";
+  reihe.tipps[nr] = ordneZeichen(alt.includes(wert) ? alt.replace(wert, "") : alt + wert);
+  eingabeWert = reiheAlsText(reihe);
+  render();
+  speichereScheine();
+}
+
+function zeigeSpeicherstand() {
+  let offen = 0;
+  for (const s of SCHEINE) for (const r of s.reihen)
+    offen += SPIELE.filter((sp) => !r.tipps[sp.nr]).length;
+  el("s-speicher").textContent =
+    (offen ? offen + (offen === 1 ? " Tippfeld ohne Tipp. " : " Tippfelder ohne Tipp. ") : "") +
+    tippQuelle;
+}
+
+/** "1010221122011", "1 02 1 2 …" oder "1-- -02 1-- …" -> 13 Zeichenketten.
+    Ein Feld ohne Ziffer ("·", "---") heißt: kein Tipp. Gibt null zurück, wenn
+    es nicht genau 13 Felder sind. */
+function parseReihe(text) {
+  const t = String(text || "").trim();
+  let felder;
+  if (/^[012·]+$/.test(t)) felder = t.split("");
+  else felder = t.split(/[\s,;|]+/).filter(Boolean);
+  if (felder.length !== SPIELE.length) return {felder: null, anzahl: felder.length};
+  return {felder: felder.map(ordneZeichen), anzahl: felder.length};
+}
+
+function reiheAlsText(reihe) {
+  return SPIELE.map((sp) => reihe.tipps[sp.nr] || "·").join(" ");
+}
+
+/* 3) Demo — ?demo=1 spielt feste Ergebnisse ein, um die Auswertung
+      nachzurechnen, ohne auf den Anpfiff zu warten. ?demo=ende: alle 13 beendet. */
+const DEMO = {
+  "401861057": {state:"post", heim:1, gast:1, detail:"FT",  clock:"90'+3'"},
+  "401861061": {state:"post", heim:3, gast:0, detail:"FT",  clock:"90'+1'"},
+  "401883312": {state:"post", heim:0, gast:1, detail:"FT",  clock:"90'+5'"},
+  "401861066": {state:"in",   heim:2, gast:1, detail:"67'", clock:"67'"},
+  "401861063": {state:"in",   heim:0, gast:2, detail:"71'", clock:"71'"}
+};
+const DEMO_ENDE = Object.fromEntries([
+  ["401861074", 1, 0], ["401861057", 1, 1], ["401861061", 3, 0], ["401861066", 0, 1],
+  ["401861063", 0, 2], ["401861068", 0, 2], ["401861069", 1, 1], ["401861070", 2, 0],
+  ["401861073", 1, 3], ["401861072", 0, 1], ["401883312", 0, 1], ["401883164", 2, 1],
+  ["401883201", 1, 0]
+].map(([id, heim, gast]) => [id, {state:"post", heim, gast, detail:"FT", clock:"90'"}]));
+
+/* ========== Darstellung ========== */
+
+const zeitFmt = new Intl.DateTimeFormat("de-DE", {timeZone:"Europe/Berlin", hour:"2-digit", minute:"2-digit"});
+const tagFmt  = new Intl.DateTimeFormat("de-DE", {timeZone:"Europe/Berlin", weekday:"long"});
+const datFmt  = new Intl.DateTimeFormat("de-DE", {timeZone:"Europe/Berlin", day:"2-digit", month:"2-digit", year:"numeric"});
+const kurzFmt = new Intl.DateTimeFormat("de-DE", {timeZone:"Europe/Berlin", weekday:"short"});
+const uhrFmt  = new Intl.DateTimeFormat("de-DE", {timeZone:"Europe/Berlin", hour:"2-digit", minute:"2-digit", second:"2-digit"});
+
+let stand_daten = {};
+let quelle = "";
+let quelleWarnt = false;
+
+const el = (id) => document.getElementById(id);
+const txt = (s) => document.createTextNode(s);
+function neuesEl(tag, klasse, text) {
+  const e = document.createElement(tag);
+  if (klasse) e.className = klasse;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+/** "02" -> "0/2" für Chips; in den engen Zellen bleibt es "02". */
+const zeichenText = (z) => z ? z.split("").join("/") : "–";
+
+function scheinKuerzel(i, schein, ri) {
+  return "S" + (i + 1) + (schein.reihen.length > 1 ? "·" + (ri + 1) : "");
+}
+
+const KLASSEN = [[13, "GK I"], [12, "GK II"], [11, "GK III"]];
+
+function klassenText(s, verteilung) {
+  if (s.ohneTipp > 0) {
+    return [s.ohneTipp + (s.ohneTipp === 1 ? " Spiel ist" : " Spiele sind") +
+            " ohne Tipp — die Auswertung ist unvollständig.", "raus"];
+  }
+  if (s.beendet === 0) {
+    return ["Noch kein Spiel beendet — alle 13 Tipps sind offen.", ""];
+  }
+  if (s.maxMoeglich < 11) {
+    return [s.fehl + " Fehltipps — rechnerisch ist keine Gewinnklasse mehr erreichbar.", "raus"];
+  }
+  if (s.offen === 0) {
+    const teile = KLASSEN.filter(([k]) => verteilung[k])
+      .map(([k, name]) => verteilung[k] + "× " + name + " (" + k + ")");
+    const n = KLASSEN.reduce((summe, [k]) => summe + verteilung[k], 0);
+    return ["Alle Spiele beendet — " + (n === 1 ? "Gewinnreihe: " : "Gewinnreihen: ") +
+            teile.join(", ") + ".", "gut"];
+  }
+  const erreichbar = [];
+  if (s.maxMoeglich >= 13) erreichbar.push("GK I (13)");
+  if (s.maxMoeglich >= 12) erreichbar.push("GK II (12)");
+  erreichbar.push("GK III (11)");
+  const text = s.offen + (s.offen === 1 ? " Spiel offen" : " Spiele offen") +
+               ", höchstens " + s.maxMoeglich + " Richtige — erreichbar: " +
+               erreichbar.join(", ") + ".";
+  return [text, s.fehl === 0 ? "gut" : ""];
+}
+
+/** Bester Tipp eines Scheins: erst nach höchstens erreichbaren, dann nach Richtigen. */
+function besterTipp(auswertungen) {
+  return auswertungen.reduce((a, b) =>
+    (b.s.maxMoeglich > a.s.maxMoeglich ||
+     (b.s.maxMoeglich === a.s.maxMoeglich && b.s.livePlus > a.s.livePlus)) ? b : a);
+}
+
+function baueSchein(schein, i, lagen) {
+  const sec = neuesEl("section", "schein");
+  const auswertungen = schein.reihen.map((r) => {
+    const bews = SPIELE.map((sp, j) => bewerte(lagen[j], r.tipps[sp.nr] || ""));
+    return {bews, s: stand(bews)};
+  });
+  const system = istSystem(schein);
+
+  /* Kopf */
+  const kopf = neuesEl("header", "kopf");
+  const h = neuesEl("h2", "produkt", "TOTO ");
+  h.appendChild(neuesEl("em", "", "13er Ergebniswette · Schein " + (i + 1)));
+  kopf.appendChild(h);
+  const kz = neuesEl("div", "kopf-zeile");
+  if (RUNDE.runde) kz.appendChild(neuesEl("span", "pill", RUNDE.runde));
+  kz.appendChild(neuesEl("span", "", RUNDE.tage || ""));
+  kz.appendChild(neuesEl("span", "pill hell", scheinArt(schein)));
+  kopf.appendChild(kz);
+  sec.appendChild(kopf);
+
+  /* Scheindaten */
+  const dl = neuesEl("dl", "daten");
+  [["Losnummer", schein.los], ["Quittungsnummer", schein.quittung],
+   ["Spielschein", scheinArt(schein)], ["Einsatz", schein.einsatz]].forEach(([k, v]) => {
+    const d = neuesEl("div");
+    d.appendChild(neuesEl("dt", "", k));
+    d.appendChild(neuesEl("dd", "", v || "–"));
+    dl.appendChild(d);
+  });
+  sec.appendChild(dl);
+
+  /* Stand */
+  const st = neuesEl("div", "stand");
+  const best = besterTipp(auswertungen);
+  const sk = neuesEl("div", "stand-kopf");
+  const links = neuesEl("div");
+  links.appendChild(neuesEl("p", "label", "Inoffizieller Stand"));
+  const neben = neuesEl("p", "unterlabel");
+  const mehrere = system || schein.reihen.length > 1;
+  neben.appendChild(txt("Richtige aus " + best.s.beendet +
+    (best.s.beendet === 1 ? " beendeten Spiel" : " beendeten Spielen") +
+    (mehrere ? " · beste Tippreihe" : "")));
+  if (best.s.laeuft > 0) {
+    neben.appendChild(document.createElement("br"));
+    neben.appendChild(txt("inkl. laufender Spiele: " + best.s.livePlus +
+      " (" + best.s.laeuft + (best.s.laeuft === 1 ? " läuft" : " laufen") + ")"));
+  }
+  links.appendChild(neben);
+  sk.appendChild(links);
+  const z = neuesEl("div", "zaehler");
+  z.appendChild(neuesEl("b", "", String(best.s.richtig)));
+  z.appendChild(neuesEl("span", "", " / " + best.s.gesamt));
+  sk.appendChild(z);
+  st.appendChild(sk);
+
+  schein.reihen.forEach((reihe, ri) => {
+    const {bews, s} = auswertungen[ri];
+    const aktiv = bearbeiten && bearbeiten.schein === schein.id && bearbeiten.reihe === ri;
+
+    const titel = neuesEl("p", "reihe-titel");
+    const tt = neuesEl("span", "", schein.reihen.length > 1 ? (ri + 1) + ". Tipp" : "Ihre Zahlen");
+    if (schein.reihen.length > 1) tt.appendChild(neuesEl("small", "", s.richtig + " Richtige"));
+    titel.appendChild(tt);
+    const knopf = neuesEl("button", "klein" + (aktiv ? " aktiv" : ""), aktiv ? "Fertig" : "Tipps bearbeiten");
+    knopf.type = "button";
+    knopf.addEventListener("click", () => aktiv ? beendeBearbeiten() : starteBearbeiten(schein.id, ri));
+    titel.appendChild(knopf);
+    st.appendChild(titel);
+
+    const zeile = neuesEl("div", "reihe");
+    SPIELE.forEach((sp, j) => {
+      const b = bews[j];
+      const c = neuesEl("div", "zelle");
+      if (b.zeichen.length === 2) c.classList.add("zw");
+      if (b.zeichen.length === 3) c.classList.add("dw");
+      if (b.zustand === "in")   c.classList.add(b.treffer ? "z-in-hit" : "z-in-miss");
+      if (b.zustand === "post") c.classList.add(b.treffer ? "z-post-hit" : "z-post-miss");
+      c.textContent = b.zeichen || "–";
+      c.title = sp.nr + ". " + sp.heim + " – " + sp.gast +
+                (b.zeichen ? " · Tipp " + zeichenText(b.zeichen) : " · kein Tipp");
+      zeile.appendChild(c);
+    });
+    st.appendChild(zeile);
+
+    if (aktiv) st.appendChild(baueSchnell(schein, ri));
+  });
+
+  const [kText, kKlasse] = klassenText(best.s, gewinnreihenGesamt(auswertungen));
+  const k = neuesEl("p", "hinweis" + (kKlasse ? " " + kKlasse : ""));
+  if (kKlasse === "raus") k.appendChild(neuesEl("strong", "", "Ausgeschieden. "));
+  k.appendChild(txt(kText));
+  st.appendChild(k);
+
+  const akt = neuesEl("div", "schein-aktionen");
+  const plus = neuesEl("button", "klein", "+ Tipp");
+  plus.type = "button";
+  plus.addEventListener("click", () => {
+    schein.reihen.push({tipps: {}});
+    const ri = schein.reihen.length - 1;
+    frisch.add(schein.id + ":" + ri);
+    speichereScheine();
+    starteBearbeiten(schein.id, ri);
+  });
+  akt.appendChild(plus);
+  akt.appendChild(entfernenKnopf("Schein entfernen", () => entferneSchein(schein.id)));
+  st.appendChild(akt);
+
+  sec.appendChild(st);
+  return sec;
+}
+
+/** Summe der Gewinnreihen aller Tipps eines Scheins. */
+function gewinnreihenGesamt(auswertungen) {
+  const summe = new Array(14).fill(0);
+  for (const a of auswertungen) gewinnreihen(a.bews).forEach((n, k) => { summe[k] += n; });
+  return summe;
+}
+
+/** Zweistufiger Löschknopf — confirm() ist in der Artifact-Sandbox gesperrt. */
+function entfernenKnopf(text, aktion) {
+  const b = neuesEl("button", "klein gefahr", text);
+  b.type = "button";
+  let scharf = null;
+  b.addEventListener("click", () => {
+    if (scharf) { clearTimeout(scharf); aktion(); return; }
+    b.textContent = "Wirklich entfernen?";
+    b.classList.add("aktiv");
+    scharf = setTimeout(() => {
+      scharf = null; b.textContent = text; b.classList.remove("aktiv");
+    }, 4000);
+  });
+  return b;
+}
+
+let eingabeWert = "";
+let eingabeFehler = "";
+
+function baueSchnell(schein, ri) {
+  const box = neuesEl("div", "schnell");
+  const lab = neuesEl("label", "", "Ganze Reihe eintippen — 13 Felder wie auf der Quittung, " +
+    "Zweiweg/Dreiweg als mehrere Ziffern („1 02 1 2 …“ oder „1-- -02 1-- …“). " +
+    "Ab Anpfiff steht ein Tipp fest.");
+  lab.htmlFor = "s-eingabe";
+  box.appendChild(lab);
+  const inp = neuesEl("input");
+  inp.id = "s-eingabe";
+  inp.type = "text";
+  inp.autocomplete = "off";
+  inp.placeholder = "1 02 1 2 2 2 0 1 2 2 0 1 1";
+  inp.value = eingabeWert;
+  inp.addEventListener("input", () => { eingabeWert = inp.value; });
+  inp.addEventListener("keydown", (e) => { if (e.key === "Enter") uebernehmeReihe(); });
+  box.appendChild(inp);
+  const ok = neuesEl("button", "klein", "Übernehmen");
+  ok.type = "button";
+  ok.addEventListener("click", uebernehmeReihe);
+  box.appendChild(ok);
+  if (eingabeFehler) box.appendChild(neuesEl("span", "fehler", eingabeFehler));
+
+  const schl = schein.id + ":" + ri;
+  const fest = SPIELE.filter((sp) => istGesperrt(sp, schl)).length;
+  if (fest === SPIELE.length) {
+    box.appendChild(neuesEl("span", "notiz", "Alle Spiele sind angepfiffen — dieser Tipp " +
+      "steht fest und lässt sich nicht mehr ändern."));
+  } else if (fest > 0) {
+    box.appendChild(neuesEl("span", "notiz", fest + (fest === 1 ? " Spiel ist" : " Spiele sind") +
+      " bereits angepfiffen und bleib" + (fest === 1 ? "t" : "en") + " unverändert. Tippen Sie " +
+      "die Reihe trotzdem vollständig ein, damit die Positionen stimmen."));
+  }
+  if (schein.reihen.length > 1) {
+    box.appendChild(entfernenKnopf("Diesen Tipp entfernen", () => {
+      schein.reihen.splice(ri, 1);
+      beendeBearbeiten();
+      speichereScheine();
+    }));
+  }
+  return box;
+}
+
+function render() {
+  // Fokus und Cursor im Eingabefeld über das Neuzeichnen retten.
+  const fokus = document.activeElement && document.activeElement.id === "s-eingabe"
+    ? [document.activeElement.selectionStart, document.activeElement.selectionEnd] : null;
+
+  const lagen = SPIELE.map(lage);
+
+  const box = el("scheine");
+  box.textContent = "";
+  if (!SCHEINE.length) {
+    box.appendChild(neuesEl("p", "leer-hinweis",
+      "Für diese Wettrunde ist noch kein Schein eingetragen. Über „+ Neuer Schein“ " +
+      "Losnummer, Quittungsnummer und Tipps von der Quittung übernehmen."));
+  }
+  SCHEINE.forEach((s, i) => box.appendChild(baueSchein(s, i, lagen)));
+
+  el("s-quelle-text").textContent = quelle;
+  el("s-quelle").classList.toggle("warn", quelleWarnt);
+
+  /* Bearbeiten-Leiste */
+  const reihe = bearbeiteteReihe();
+  el("b-leiste").hidden = !reihe;
+  if (reihe) {
+    const i = SCHEINE.findIndex((s) => s.id === bearbeiten.schein);
+    const s = SCHEINE[i];
+    const t = el("b-text");
+    t.textContent = "Tipps bearbeiten: Schein " + (i + 1) +
+      (s.reihen.length > 1 ? ", " + (bearbeiten.reihe + 1) + ". Tipp" : "");
+    t.appendChild(neuesEl("small", "", "Mehrere Zeichen je Spiel = Zweiweg bzw. Dreiweg · " +
+      anzahlReihen(reihe) + (anzahlReihen(reihe) === 1 ? " Tippreihe" : " Tippreihen")));
+  }
+
+  const liste = el("liste");
+  liste.textContent = "";
+  const sortiert = SPIELE.map((sp, i) => ({sp, l: lagen[i]}))
+    .sort((x, y) => new Date(x.sp.anstoss) - new Date(y.sp.anstoss) || x.sp.nr - y.sp.nr);
+
+  let letzterTag = null;
+  for (const {sp, l} of sortiert) {
+    const d = new Date(sp.anstoss);
+    const tag = tagFmt.format(d);
+    if (tag !== letzterTag) {
+      letzterTag = tag;
+      const h = neuesEl("h2", "tag", tag);
+      h.appendChild(neuesEl("span", "", datFmt.format(d)));
+      liste.appendChild(h);
+    }
+    liste.appendChild(karte(sp, l, d));
+  }
+
+  zeigeSpeicherstand();
+
+  if (fokus) {
+    const inp = el("s-eingabe");
+    if (inp) { inp.focus(); inp.setSelectionRange(fokus[0], fokus[1]); }
+  }
+}
+
+function karte(sp, l, d) {
+  const a = neuesEl("article", "spiel s-" + l.zustand);
+
+  /* Kopfzeile: Nummer, Liga, Anstoß, Statuschip */
+  const kopf = neuesEl("div", "spiel-kopf");
+  kopf.appendChild(neuesEl("span", "nr", String(sp.nr)));
+  kopf.appendChild(neuesEl("span", "liga", LIGEN[sp.liga].name));
+  kopf.appendChild(neuesEl("span", "zeit", kurzFmt.format(d) + " " + zeitFmt.format(d)));
+  if (l.zustand === "pre") {
+    kopf.appendChild(neuesEl("span", "status st-pre", "offen"));
+  } else if (l.zustand === "in") {
+    kopf.appendChild(neuesEl("span", "status st-in", l.live.clock || l.live.detail || "läuft"));
+  } else {
+    kopf.appendChild(neuesEl("span", "status st-post", "beendet"));
+  }
+  a.appendChild(kopf);
+
+  /* Mannschaften mit Toren */
+  const m = neuesEl("div", "mannschaften");
+  const gespielt = l.zustand !== "pre";
+  [["heim", sp.heim, gespielt ? l.live.heim : null],
+   ["gast", sp.gast, gespielt ? l.live.gast : null]].forEach(([seite, name, tore]) => {
+    const z = neuesEl("div", "mann");
+    if (gespielt && ((seite === "heim" && l.ist === "1") || (seite === "gast" && l.ist === "2"))) {
+      z.classList.add("sieger");
+    }
+    z.appendChild(neuesEl("span", "name", name));
+    z.appendChild(neuesEl("span", "tor", tore === null ? "–" : String(tore)));
+    m.appendChild(z);
+  });
+  a.appendChild(m);
+
+  /* Fußzeile: Wetttendenz, Ergebnis-Zeichen, Tipps */
+  const f = neuesEl("div", "fuss");
+
+  const t = neuesEl("div", "tendenz");
+  t.setAttribute("role", "img");
+  t.setAttribute("aria-label", "Wetttendenz " + sp.tendenz.join("-") +
+                 " (Heimsieg, Unentschieden, Auswärtssieg)");
+  t.title = "Wetttendenz " + sp.tendenz.join("-");
+  ["1", "0", "2"].forEach((zeichen, i) => {
+    const seg = neuesEl("span", "t t" + zeichen, String(sp.tendenz[i]));
+    seg.style.flex = String(sp.tendenz[i]);
+    t.appendChild(seg);
+  });
+  f.appendChild(t);
+
+  const reihe = bearbeiteteReihe();
+  if (reihe && !istGesperrt(sp, bearbeitSchluessel())) {
+    /* Tippwahl statt Anzeige — 1/0/2 schalten; mehrere = Zweiweg/Dreiweg. */
+    const z = reihe.tipps[sp.nr] || "";
+    const wahl = neuesEl("div", "tippwahl");
+    wahl.setAttribute("role", "group");
+    wahl.setAttribute("aria-label", "Tipp für " + sp.heim + " gegen " + sp.gast);
+    ["1", "0", "2"].forEach((wert) => {
+      const k = neuesEl("button", "tw" + (z.includes(wert) ? " aktiv" : ""), wert);
+      k.type = "button";
+      k.setAttribute("aria-pressed", String(z.includes(wert)));
+      k.title = {1: "Heimsieg", 0: "Unentschieden", 2: "Auswärtssieg"}[wert];
+      k.addEventListener("click", () => schalteZeichen(sp.nr, wert));
+      wahl.appendChild(k);
+    });
+    f.appendChild(wahl);
+  } else {
+    const tipps = neuesEl("div", "tipps");
+    tipps.appendChild(neuesEl("span", "cap", "Ergebnis"));
+    tipps.appendChild(neuesEl("span", "chip ist", l.ist || "–"));
+    SCHEINE.forEach((s, i) => s.reihen.forEach((r, ri) => {
+      const b = bewerte(l, r.tipps[sp.nr] || "");
+      const c = neuesEl("span", "tc");
+      if (!b.zeichen) c.classList.add("leer");
+      else if (b.treffer !== null) c.classList.add((b.zustand === "in" ? "in-" : "post-") + (b.treffer ? "hit" : "miss"));
+      const bearbeitet = bearbeiten && bearbeiten.schein === s.id && bearbeiten.reihe === ri;
+      if (bearbeitet) { c.classList.add("fest"); c.title = "Angepfiffen — nicht mehr änderbar"; }
+      c.appendChild(neuesEl("small", "", scheinKuerzel(i, s, ri)));
+      c.appendChild(txt(zeichenText(b.zeichen)));
+      c.setAttribute("aria-label", "Schein " + (i + 1) +
+        (s.reihen.length > 1 ? ", " + (ri + 1) + ". Tipp" : "") + ": " +
+        (b.zeichen ? zeichenText(b.zeichen) : "kein Tipp") +
+        (b.treffer === null ? "" : b.treffer ? ", Treffer" : ", Fehltipp"));
+      tipps.appendChild(c);
+    }));
+    f.appendChild(tipps);
+  }
+
+  a.appendChild(f);
+  return a;
+}
+
+/* ========== Ablauf ========== */
+
+const demoWert = new URLSearchParams(location.search).get("demo");
+const demoAn = demoWert !== null;
+let timer = null;
+let espnZuletzt = 0;   // Zeitpunkt des letzten erfolgreichen Direktabrufs
+let bearbeiten = null; // {schein: id, reihe: index} oder null
+
+function starteBearbeiten(scheinId, ri) {
+  bearbeiten = {schein: scheinId, reihe: ri};
+  eingabeWert = reiheAlsText(bearbeiteteReihe());
+  eingabeFehler = "";
+  render();
+  el("b-leiste").scrollIntoView({block: "nearest"});
+}
+
+function beendeBearbeiten() {
+  bearbeiten = null;
+  frisch.clear();
+  eingabeFehler = "";
+  render();
+}
+
+/** Schnelleingabe -> Tipps übernehmen, angepfiffene ausgenommen. */
+function uebernehmeReihe() {
+  const reihe = bearbeiteteReihe();
+  if (!reihe) return;
+  const {felder, anzahl} = parseReihe(eingabeWert);
+  if (!felder) {
+    eingabeFehler = anzahl + " von " + SPIELE.length + " Feldern erkannt. Es braucht genau " +
+      SPIELE.length + " — in der Reihenfolge der Spielnummern, getrennt durch Leerzeichen " +
+      "(oder 13 Ziffern am Stück ohne Zweiweg).";
+    render();
+    return;
+  }
+  let uebersprungen = 0;
+  SPIELE.forEach((sp, i) => {
+    if (istGesperrt(sp, bearbeitSchluessel())) { uebersprungen++; return; }
+    reihe.tipps[sp.nr] = felder[i];
+  });
+  eingabeFehler = uebersprungen ? uebersprungen + (uebersprungen === 1
+      ? " Spiel war schon angepfiffen und wurde nicht geändert."
+      : " Spiele waren schon angepfiffen und wurden nicht geändert.") : "";
+  eingabeWert = reiheAlsText(reihe);
+  render();
+  speichereScheine();
+}
+
+function entferneSchein(id) {
+  SCHEINE = SCHEINE.filter((s) => s.id !== id);
+  if (bearbeiten && bearbeiten.schein === id) bearbeiten = null;
+  render();
+  speichereScheine();
+}
+
+/* Neuer Schein: Metadaten + optional gleich der erste Tipp. */
+function zeigeFormular(an) {
+  el("n-form").hidden = !an;
+  el("n-oeffnen").hidden = an;
+  el("n-fehler").hidden = true;
+  if (an) el("n-los").focus();
+}
+
+function legeScheinAn(e) {
+  e.preventDefault();
+  const fehler = el("n-fehler");
+  const los = el("n-los").value.trim();
+  const quittung = el("n-quittung").value.trim();
+  const roh = el("n-reihe").value.trim();
+  if (!los && !quittung) {
+    fehler.textContent = "Bitte mindestens Losnummer oder Quittungsnummer angeben.";
+    fehler.hidden = false;
+    return;
+  }
+  const tipps = {};
+  if (roh) {
+    const {felder, anzahl} = parseReihe(roh);
+    if (!felder) {
+      fehler.textContent = anzahl + " von " + SPIELE.length + " Feldern erkannt. Es braucht " +
+        "genau " + SPIELE.length + ", getrennt durch Leerzeichen.";
+      fehler.hidden = false;
+      return;
+    }
+    SPIELE.forEach((sp, i) => { if (felder[i]) tipps[sp.nr] = felder[i]; });
+  }
+  const schein = {
+    id: "s" + Date.now().toString(36),
+    los, quittung,
+    einsatz: el("n-einsatz").value.trim(),
+    reihen: [{tipps}]
+  };
+  SCHEINE.push(schein);
+  ["n-los", "n-quittung", "n-einsatz", "n-reihe"].forEach((id) => { el(id).value = ""; });
+  zeigeFormular(false);
+  speichereScheine();
+  if (roh) {
+    render();
+  } else {
+    frisch.add(schein.id + ":0");
+    starteBearbeiten(schein.id, 0);
+  }
+}
+
+function planeNaechsten() {
+  if (timer) clearTimeout(timer);
+  if (demoAn) return;
+  const laeuft = SPIELE.some((sp) => (stand_daten[sp.id] || {}).state === "in");
+  timer = setTimeout(aktualisiere, laeuft ? 45000 : 600000);
+}
+
+async function aktualisiere() {
+  if (demoAn) {
+    stand_daten = demoWert === "ende" ? DEMO_ENDE : DEMO;
+    quelle = "Demo-Modus — feste Testergebnisse, keine Live-Daten";
+    quelleWarnt = true;
+    render();
+    return;
+  }
+  const knopf = el("s-neu");
+  knopf.disabled = true;
+  try {
+    stand_daten = await holeESPN();
+    espnZuletzt = Date.now();
+    quelle = "ESPN · Stand " + uhrFmt.format(new Date());
+    quelleWarnt = false;
+  } catch (e) {
+    if (Object.keys(stand_daten).length === 0) {
+      quelle = "Kein direkter Abruf möglich — warte auf Daten aus dem Schein-Speicher";
+    } else {
+      quelle = "Aktualisierung fehlgeschlagen · letzter Stand " + uhrFmt.format(new Date());
+    }
+    quelleWarnt = true;
+  }
+  knopf.disabled = false;
+  render();
+  planeNaechsten();
+}
+
+function ausDB(doc) {
+  if (!doc || !doc.spiele) return;
+  const zeit = doc.aktualisiert ? new Date(doc.aktualisiert) : new Date();
+  // Der eigene Direktabruf hat Vorrang, solange er frischer ist.
+  if (espnZuletzt && zeit.getTime() < espnZuletzt) return;
+  stand_daten = doc.spiele;
+  quelle = "Stand " + uhrFmt.format(zeit);
+  quelleWarnt = false;
+  render();
+}
+
+/** Scheine aus dem Schein-Speicher — kommen auch an, wenn ein anderes Gerät sie
+    ändert. Ein Dokument im alten Format wird einmalig umgeschrieben. */
+function ausDBScheine(doc) {
+  if (!doc) return;
+  if (Array.isArray(doc.scheine)) {
+    SCHEINE = doc.scheine;
+  } else if (doc.tipps) {
+    SCHEINE = ausAltemFormat(doc.tipps);
+    speichereScheine();
+  } else {
+    return;
+  }
+  if (bearbeiten && !bearbeiteteReihe()) bearbeiten = null;
+  inSpeicher();
+  tippQuelle = "Scheine gespeichert — gelten auf allen Ihren Geräten.";
+  if (bearbeiten && document.activeElement?.id !== "s-eingabe") {
+    eingabeWert = reiheAlsText(bearbeiteteReihe());
+  }
+  render();
+}
+
+function zeigeLadefehler() {
+  el("s-neu").disabled = true;
+  el("s-quelle-text").textContent = "";
+  const k = neuesEl("p", "hinweis raus");
+  k.appendChild(neuesEl("strong", "", "spiele.json konnte nicht geladen werden. "));
+  k.appendChild(txt("Beim direkten Öffnen der Datei verweigern Browser diesen Zugriff. " +
+    "Stattdessen im Projektordner »python3 stand-holen.py serve« ausführen — " +
+    "das startet einen lokalen Server und öffnet den Schein."));
+  el("scheine").appendChild(k);
+}
+
+async function start() {
+  let daten;
+  try {
+    daten = await ladeRunde();
+  } catch (e) {
+    zeigeLadefehler();
+    return;
+  }
+  RUNDE = daten.runde;
+  SPIELE = daten.spiele;
+  LIGEN = daten.ligen;
+  TAGE = daten.tage;
+  SCHEINE_START = daten.scheine || [];
+
+  // Scheine: zuerst die aus spiele.json, dann überschreibt der lokale Speicher,
+  // zuletzt der Schein-Speicher (per onSnapshot, sobald er antwortet).
+  SCHEINE = JSON.parse(JSON.stringify(SCHEINE_START));
+  const lokal = ausSpeicher();
+  if (lokal) {
+    SCHEINE = lokal;
+    tippQuelle = "Scheine von diesem Gerät.";
+  }
+
+  render();
+  aktualisiere();
+
+  el("b-fertig").addEventListener("click", beendeBearbeiten);
+  el("n-oeffnen").addEventListener("click", () => zeigeFormular(true));
+  el("n-abbrechen").addEventListener("click", () => zeigeFormular(false));
+  el("n-form").addEventListener("submit", legeScheinAn);
+
+  if (!demoAn) {
+    verbindeDB(ausDB, ausDBScheine);
+    el("s-neu").addEventListener("click", aktualisiere);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) aktualisiere();
+    });
+  } else {
+    el("s-neu").disabled = true;
+  }
+}
+
+start();
+</script>

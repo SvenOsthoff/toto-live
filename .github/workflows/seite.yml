@@ -1,0 +1,77 @@
+# Holt täglich den Spielplan der aktuellen Wettrunde und veröffentlicht die Seite
+# auf GitHub Pages. Eine neue Runde wird erst übernommen, wenn die laufende
+# vorbei ist (letzter Anstoß + 3 Stunden) — sonst springt die Seite mitten in
+# den Spielen auf die nächste Runde.
+name: Spielplan und Seite
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 5 * * *"   # täglich 05:17 UTC
+  workflow_dispatch:
+    inputs:
+      erzwingen:
+        description: "Spielplan auch während einer laufenden Runde holen"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  seite:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.veroeffentlichen.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Spielplan holen
+        if: github.event_name != 'push'
+        # Findet spielplan.py nicht alle 13 Paarungen (etwa weil ESPN die Spiele
+        # noch nicht führt), bleibt die bisherige Runde online.
+        continue-on-error: true
+        env:
+          ERZWINGEN: ${{ inputs.erzwingen }}
+        run: |
+          runde_vorbei=$(python3 - <<'EOF'
+          import datetime, json
+          d = json.load(open("spiele.json", encoding="utf-8"))
+          letzter = max(datetime.datetime.fromisoformat(s["anstoss"].replace("Z", "+00:00"))
+                        for s in d["spiele"])
+          jetzt = datetime.datetime.now(datetime.timezone.utc)
+          print("ja" if jetzt > letzter + datetime.timedelta(hours=3) else "nein")
+          EOF
+          )
+          if [ "$runde_vorbei" != "ja" ] && [ "$ERZWINGEN" != "true" ]; then
+            echo "Wettrunde läuft noch — Spielplan bleibt unverändert."
+            exit 0
+          fi
+          python3 spielplan.py
+          if ! git diff --quiet spiele.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "Spielplan aktualisiert"
+            git push
+          fi
+
+      - name: Seite zusammenstellen
+        run: |
+          mkdir _site
+          cp toto-live.html _site/index.html
+          cp spiele.json manifest.webmanifest apple-touch-icon.png icon-512.png _site/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: veroeffentlichen
+        uses: actions/deploy-pages@v4
