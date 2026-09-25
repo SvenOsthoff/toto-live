@@ -1,0 +1,14 @@
+name: ESPN-Test (temporär)
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for host in site.api.espn.com site.web.api.espn.com; do
+            u="https://$host/apis/site/v2/sports/soccer/uefa.nations/scoreboard?dates=20260926"
+            for ua in "toto-prototyp" "curl/8.5.0" "" "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1"; do
+              printf "%s | %-12.12s | " "$host" "${ua:-<leer>}"
+              curl -s -o /tmp/r -w "%{http_code} " -A "$ua" "$u"; python3 -c "import json;print(len(json.load(open('/tmp/r')).get('events',[])),'events')" 2>/dev/null || echo "-"
+            done
+          done
