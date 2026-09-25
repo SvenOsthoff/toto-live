@@ -34,7 +34,7 @@ def lade_runde():
 
 
 def scoreboard(slug, tag):
-    url = ("https://site.api.espn.com/apis/site/v2/sports/soccer/"
+    url = ("https://site.web.api.espn.com/apis/site/v2/sports/soccer/"
            f"{slug}/scoreboard?dates={tag}")
     req = urllib.request.Request(url, headers={"User-Agent": "toto-prototyp"})
     with urllib.request.urlopen(req, timeout=30) as r:

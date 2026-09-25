@@ -129,7 +129,7 @@ def hole_espn_pool(tage, ligen=KANDIDATEN):
 
     def eines(auftrag):
         liga, tag = auftrag
-        url = ("https://site.api.espn.com/apis/site/v2/sports/soccer/"
+        url = ("https://site.web.api.espn.com/apis/site/v2/sports/soccer/"
                f"{liga}/scoreboard?dates={tag}")
         try:
             daten = json.loads(_hole(url, UA_ESPN))

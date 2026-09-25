@@ -579,7 +579,7 @@ async function holeESPN() {
   const urls = [];
   for (const k of Object.keys(LIGEN))
     for (const tag of TAGE)
-      urls.push("https://site.api.espn.com/apis/site/v2/sports/soccer/" +
+      urls.push("https://site.web.api.espn.com/apis/site/v2/sports/soccer/" +
                 LIGEN[k].slug + "/scoreboard?dates=" + tag);
 
   const antworten = await Promise.all(urls.map(async (u) => {
