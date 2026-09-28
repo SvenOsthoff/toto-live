@@ -1,43 +1,52 @@
 {
  "runde": {
-  "runde": "38. Wettrunde",
-  "tage": "Spieltage 26./27.09.2026"
+  "runde": "39. Wettrunde",
+  "tage": "Spieltage 03./04.10.2026"
  },
  "ligen": {
   "uefa_nations": {
    "slug": "uefa.nations",
    "name": "UEFA Nations League"
-  },
-  "esp_2": {
-   "slug": "esp.2",
-   "name": "2. Liga Spanien"
   }
  },
  "tage": [
-  "20260926",
-  "20260927"
+  "20261003",
+  "20261004"
  ],
  "spiele": [
   {
    "nr": 1,
-   "heim": "Deutschland",
-   "gast": "Griechenland",
-   "id": "401861074",
+   "heim": "Griechenland",
+   "gast": "Deutschland",
+   "id": "401861123",
    "liga": "uefa_nations",
-   "anstoss": "2026-09-27T18:45Z",
+   "anstoss": "2026-10-04T18:45Z",
    "tendenz": [
-    7,
     2,
-    1
+    3,
+    5
    ]
   },
   {
    "nr": 2,
-   "heim": "Slowenien",
-   "gast": "Schottland",
-   "id": "401861057",
+   "heim": "Kroatien",
+   "gast": "England",
+   "id": "401861113",
    "liga": "uefa_nations",
-   "anstoss": "2026-09-26T13:00Z",
+   "anstoss": "2026-10-03T16:00Z",
+   "tendenz": [
+    2,
+    3,
+    5
+   ]
+  },
+  {
+   "nr": 3,
+   "heim": "Island",
+   "gast": "Bulgarien",
+   "id": "401861112",
+   "liga": "uefa_nations",
+   "anstoss": "2026-10-03T16:00Z",
    "tendenz": [
     4,
     3,
@@ -45,25 +54,12 @@
    ]
   },
   {
-   "nr": 3,
-   "heim": "Bulgarien",
-   "gast": "Luxemburg",
-   "id": "401861061",
-   "liga": "uefa_nations",
-   "anstoss": "2026-09-26T16:00Z",
-   "tendenz": [
-    5,
-    3,
-    2
-   ]
-  },
-  {
    "nr": 4,
-   "heim": "England",
-   "gast": "Spanien",
-   "id": "401861066",
+   "heim": "Estland",
+   "gast": "Luxemburg",
+   "id": "401861115",
    "liga": "uefa_nations",
-   "anstoss": "2026-09-26T18:45Z",
+   "anstoss": "2026-10-03T16:00Z",
    "tendenz": [
     3,
     3,
@@ -72,11 +68,24 @@
   },
   {
    "nr": 5,
-   "heim": "Tschechien",
-   "gast": "Kroatien",
-   "id": "401861063",
+   "heim": "Schweiz",
+   "gast": "Slowenien",
+   "id": "401861117",
    "liga": "uefa_nations",
-   "anstoss": "2026-09-26T18:45Z",
+   "anstoss": "2026-10-03T18:45Z",
+   "tendenz": [
+    5,
+    3,
+    2
+   ]
+  },
+  {
+   "nr": 6,
+   "heim": "Nordmazedonien",
+   "gast": "Schottland",
+   "id": "401861116",
+   "liga": "uefa_nations",
+   "anstoss": "2026-10-03T18:45Z",
    "tendenz": [
     3,
     3,
@@ -84,25 +93,12 @@
    ]
   },
   {
-   "nr": 6,
-   "heim": "Serbien",
-   "gast": "Niederlande",
-   "id": "401861068",
-   "liga": "uefa_nations",
-   "anstoss": "2026-09-27T16:00Z",
-   "tendenz": [
-    2,
-    3,
-    5
-   ]
-  },
-  {
    "nr": 7,
-   "heim": "Gibraltar",
-   "gast": "Andorra",
-   "id": "401861069",
+   "heim": "Aserbaidschan",
+   "gast": "Litauen",
+   "id": "401861119",
    "liga": "uefa_nations",
-   "anstoss": "2026-09-27T16:00Z",
+   "anstoss": "2026-10-04T13:00Z",
    "tendenz": [
     4,
     3,
@@ -111,63 +107,63 @@
   },
   {
    "nr": 8,
-   "heim": "Dänemark",
-   "gast": "Wales",
-   "id": "401861070",
+   "heim": "Kosovo",
+   "gast": "Österreich",
+   "id": "401861121",
    "liga": "uefa_nations",
-   "anstoss": "2026-09-27T16:00Z",
+   "anstoss": "2026-10-04T16:00Z",
    "tendenz": [
-    6,
     2,
-    2
+    3,
+    5
    ]
   },
   {
    "nr": 9,
-   "heim": "Norwegen",
-   "gast": "Portugal",
-   "id": "401861073",
+   "heim": "Malta",
+   "gast": "Andorra",
+   "id": "401861120",
    "liga": "uefa_nations",
-   "anstoss": "2026-09-27T18:45Z",
+   "anstoss": "2026-10-04T16:00Z",
    "tendenz": [
-    3,
-    3,
-    4
-   ]
-  },
-  {
-   "nr": 10,
-   "heim": "Israel",
-   "gast": "Irland",
-   "id": "401861072",
-   "liga": "uefa_nations",
-   "anstoss": "2026-09-27T18:45Z",
-   "tendenz": [
-    3,
-    3,
-    4
-   ]
-  },
-  {
-   "nr": 11,
-   "heim": "Celta Vigo II",
-   "gast": "CE Sabadell",
-   "id": "401883312",
-   "liga": "esp_2",
-   "anstoss": "2026-09-26T16:30Z",
-   "tendenz": [
-    3,
     4,
+    3,
     3
    ]
   },
   {
+   "nr": 10,
+   "heim": "Portugal",
+   "gast": "Norwegen",
+   "id": "401861126",
+   "liga": "uefa_nations",
+   "anstoss": "2026-10-04T18:45Z",
+   "tendenz": [
+    4,
+    4,
+    2
+   ]
+  },
+  {
+   "nr": 11,
+   "heim": "Niederlande",
+   "gast": "Serbien",
+   "id": "401861122",
+   "liga": "uefa_nations",
+   "anstoss": "2026-10-04T18:45Z",
+   "tendenz": [
+    5,
+    3,
+    2
+   ]
+  },
+  {
    "nr": 12,
-   "heim": "RCD Mallorca",
-   "gast": "UD Almeria",
-   "id": "401883164",
-   "liga": "esp_2",
-   "anstoss": "2026-09-27T14:15Z",
+   "heim": "Irland",
+   "gast": "Israel",
+   "id": "401861124",
+   "liga": "uefa_nations",
+   "anstoss": "2026-10-04T18:45Z",
    "tendenz": [
     4,
     3,
@@ -176,15 +172,15 @@
   },
   {
    "nr": 13,
-   "heim": "SD Eibar",
-   "gast": "UD Las Palmas",
-   "id": "401883201",
-   "liga": "esp_2",
-   "anstoss": "2026-09-27T16:30Z",
+   "heim": "Wales",
+   "gast": "Dänemark",
+   "id": "401861125",
+   "liga": "uefa_nations",
+   "anstoss": "2026-10-04T18:45Z",
    "tendenz": [
-    4,
     3,
-    3
+    3,
+    4
    ]
   }
  ],
