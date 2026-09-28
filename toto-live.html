@@ -792,7 +792,8 @@ function scheinKuerzel(i, schein, ri) {
   return "S" + (i + 1) + (schein.reihen.length > 1 ? "·" + (ri + 1) : "");
 }
 
-const KLASSEN = [[13, "GK I"], [12, "GK II"], [11, "GK III"]];
+const KLASSEN = [[13, "GK I"], [12, "GK II"], [11, "GK III"], [10, "GK IV"]];
+const MIN_RICHTIGE = KLASSEN[KLASSEN.length - 1][0];
 
 function klassenText(s, verteilung) {
   if (s.ohneTipp > 0) {
@@ -802,7 +803,7 @@ function klassenText(s, verteilung) {
   if (s.beendet === 0) {
     return ["Noch kein Spiel beendet — alle 13 Tipps sind offen.", ""];
   }
-  if (s.maxMoeglich < 11) {
+  if (s.maxMoeglich < MIN_RICHTIGE) {
     return [s.fehl + " Fehltipps — rechnerisch ist keine Gewinnklasse mehr erreichbar.", "raus"];
   }
   if (s.offen === 0) {
@@ -812,10 +813,8 @@ function klassenText(s, verteilung) {
     return ["Alle Spiele beendet — " + (n === 1 ? "Gewinnreihe: " : "Gewinnreihen: ") +
             teile.join(", ") + ".", "gut"];
   }
-  const erreichbar = [];
-  if (s.maxMoeglich >= 13) erreichbar.push("GK I (13)");
-  if (s.maxMoeglich >= 12) erreichbar.push("GK II (12)");
-  erreichbar.push("GK III (11)");
+  const erreichbar = KLASSEN.filter(([k]) => s.maxMoeglich >= k)
+    .map(([k, name]) => name + " (" + k + ")");
   const text = s.offen + (s.offen === 1 ? " Spiel offen" : " Spiele offen") +
                ", höchstens " + s.maxMoeglich + " Richtige — erreichbar: " +
                erreichbar.join(", ") + ".";
