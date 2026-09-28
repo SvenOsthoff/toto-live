@@ -126,7 +126,30 @@ def hole_spielplan(datum=None):
             print(f"Aktuelle Seite zeigt eine beendete Runde — nehme die naechste ({naechste}).")
             return hole_spielplan(naechste)
         raise SystemExit(f"{len(spiele)} statt 13 Paarungen gelesen — Seitenaufbau geaendert?")
-    return {"zeitraum": zeitraum, "tage": tage, "spiele": spiele}
+    return {"zeitraum": zeitraum, "tage": tage, "spiele": spiele, "termine": termine(h)}
+
+
+def termine(h):
+    """Alle Rundentermine (YYYY-MM-DD) des Jahres aus der Auswahlliste, aufsteigend."""
+    return sorted(re.findall(r'<option value="(\d{4}-\d{2}-\d{2})"', h))
+
+
+def naechste_nummer(alt_nummer, alt_tage, plan):
+    """Rundennummer der neuen Runde aus der alten weiterzaehlen.
+
+    Die Nummer steht auf keiner Website, und die Position in der Auswahlliste
+    weicht um eins ab — die Abstaende zwischen zwei Terminen stimmen aber.
+    Ueber einen Jahreswechsel hinweg (alter Termin nicht in der Liste) oder ohne
+    alte Nummer -> None."""
+    m = re.match(r"\s*(\d+)\.", alt_nummer or "")
+    if not (m and alt_tage):
+        return None
+    alt = f"{alt_tage[0][:4]}-{alt_tage[0][4:6]}-{alt_tage[0][6:]}"
+    neu = f"{plan['tage'][0][:4]}-{plan['tage'][0][4:6]}-{plan['tage'][0][6:]}"
+    liste = plan["termine"]
+    if alt not in liste or neu not in liste or neu <= alt:
+        return None
+    return f"{int(m.group(1)) + liste.index(neu) - liste.index(alt)}. Wettrunde"
 
 
 def naechste_runde(h):
@@ -216,13 +239,17 @@ def schreibe_spiele_json(datum=None, ziel="spiele.json"):
     print(f"Spielplan {plan['zeitraum']} — {len(pool)} ESPN-Spiele an diesen Tagen\n")
 
     # Rundendaten und Scheine nur uebernehmen, wenn es dieselbe Wettrunde ist.
-    alt_runde, alt_scheine = {}, []
+    # Bei einer neuen Runde die Nummer aus der alten weiterzaehlen.
+    alt_runde, alt_scheine, nummer = {}, [], ""
     if os.path.exists(ziel):
         with open(ziel, encoding="utf-8") as f:
             a = json.load(f)
         if a.get("tage") == plan["tage"]:
             alt_runde = a.get("runde", {})
             alt_scheine = a.get("scheine") or alter_schein(a)
+            nummer = alt_runde.get("runde", "")
+        else:
+            nummer = naechste_nummer(a.get("runde", {}).get("runde"), a.get("tage"), plan) or ""
 
     ligen, spiele, fehlend = {}, [], []
     for s in plan["spiele"]:
@@ -254,7 +281,7 @@ def schreibe_spiele_json(datum=None, ziel="spiele.json"):
         tage_txt = "/".join(teile)
     daten = {
         "runde": {
-            "runde": alt_runde.get("runde", ""),
+            "runde": nummer,
             "tage": "Spieltage " + tage_txt,
         },
         "ligen": ligen,
@@ -269,7 +296,9 @@ def schreibe_spiele_json(datum=None, ziel="spiele.json"):
     print(f"\n-> {ziel}  ({len(spiele)}/13 Spiele, {len(ligen)} Liga(en), "
           f"{len(alt_scheine)} Schein(e) uebernommen)")
     if not daten["runde"]["runde"]:
-        print("   Rundennummer unter \"runde\" ergaenzen.")
+        print("   Rundennummer nicht ableitbar — unter \"runde\" ergaenzen.")
+    elif not alt_runde:
+        print(f"   Rundennummer weitergezaehlt: {nummer} — mit der Lotto-App abgleichen.")
     if not alt_scheine:
         print("   Die Scheine traegt Sven selbst in der Seite ein (\"Neuer Schein\").")
 
