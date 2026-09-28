@@ -118,8 +118,25 @@ def hole_spielplan(datum=None):
             "tendenz": [int(g) for g in tendenz.groups()],
         })
     if len(spiele) != 13:
+        # Nach Rundenende zeigt die Seite ohne Parameter noch die alte Runde, dann
+        # mit Gewinnzahl und Ergebnis statt Wetttendenz. Die naechste Runde steht
+        # schon in der Auswahlliste — also den ersten Termin danach nehmen.
+        naechste = None if datum else naechste_runde(h)
+        if naechste:
+            print(f"Aktuelle Seite zeigt eine beendete Runde — nehme die naechste ({naechste}).")
+            return hole_spielplan(naechste)
         raise SystemExit(f"{len(spiele)} statt 13 Paarungen gelesen — Seitenaufbau geaendert?")
     return {"zeitraum": zeitraum, "tage": tage, "spiele": spiele}
+
+
+def naechste_runde(h):
+    """Termin (YYYY-MM-DD) nach dem ausgewaehlten in der Auswahlliste, sonst None."""
+    termine = re.findall(r'<option value="(\d{4}-\d{2}-\d{2})"( selected)?', h)
+    gewaehlt = [t for t, sel in termine if sel]
+    if not gewaehlt:
+        return None
+    spaeter = sorted(t for t, _ in termine if t > gewaehlt[0])
+    return spaeter[0] if spaeter else None
 
 
 def hole_espn_pool(tage, ligen=KANDIDATEN):
