@@ -300,7 +300,7 @@ def schreibe_spiele_json(datum=None, ziel="spiele.json"):
     elif not alt_runde:
         print(f"   Rundennummer weitergezaehlt: {nummer} — mit der Lotto-App abgleichen.")
     if not alt_scheine:
-        print("   Die Scheine traegt Sven selbst in der Seite ein (\"Neuer Schein\").")
+        print("   Die Scheine werden in der Seite selbst eingetragen (\"Neuer Schein\").")
 
 
 if __name__ == "__main__":
