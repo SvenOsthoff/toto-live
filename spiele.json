@@ -1,39 +1,47 @@
 {
  "runde": {
-  "runde": "45. Wettrunde",
-  "tage": "Spieltage 14./15.11.2026"
+  "runde": "46. Wettrunde",
+  "tage": "Spieltage 21./22.11.2026"
  },
  "ligen": {
-  "uefa_nations": {
-   "slug": "uefa.nations",
-   "name": "UEFA Nations League"
+  "ger_1": {
+   "slug": "ger.1",
+   "name": "Bundesliga"
+  },
+  "ger_2": {
+   "slug": "ger.2",
+   "name": "2. Bundesliga"
+  },
+  "esp_1": {
+   "slug": "esp.1",
+   "name": "1. Liga Spanien"
   }
  },
  "tage": [
-  "20261114",
-  "20261115"
+  "20261121",
+  "20261122"
  ],
  "spiele": [
   {
    "nr": 1,
-   "heim": "Spanien",
-   "gast": "England",
-   "id": "401861175",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-15T19:45Z",
+   "heim": "Borussia Mönchengladbach",
+   "gast": "Borussia Dortmund",
+   "id": "401884731",
+   "liga": "ger_1",
+   "anstoss": "2026-11-21T14:30Z",
    "tendenz": [
-    4,
-    4,
-    2
+    2,
+    2,
+    6
    ]
   },
   {
    "nr": 2,
-   "heim": "Norwegen",
-   "gast": "Wales",
-   "id": "401861165",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-14T17:00Z",
+   "heim": "Bayer 04 Leverkusen",
+   "gast": "SC Paderborn 07",
+   "id": "401884735",
+   "liga": "ger_1",
+   "anstoss": "2026-11-21T14:30Z",
    "tendenz": [
     8,
     1,
@@ -42,63 +50,76 @@
   },
   {
    "nr": 3,
-   "heim": "Georgien",
-   "gast": "Ungarn",
-   "id": "401861164",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-14T17:00Z",
+   "heim": "Eintracht Frankfurt",
+   "gast": "TSG 1899 Hoffenheim",
+   "id": "401884734",
+   "liga": "ger_1",
+   "anstoss": "2026-11-21T14:30Z",
    "tendenz": [
     4,
-    3,
-    3
+    2,
+    4
    ]
   },
   {
    "nr": 4,
-   "heim": "Schweden",
-   "gast": "Bosnien und Herzegowina",
-   "id": "401861166",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-14T19:45Z",
+   "heim": "1. FC Union Berlin",
+   "gast": "RB Leipzig",
+   "id": "401884732",
+   "liga": "ger_1",
+   "anstoss": "2026-11-21T14:30Z",
    "tendenz": [
-    6,
     2,
-    2
+    2,
+    6
    ]
   },
   {
    "nr": 5,
-   "heim": "Rumänien",
-   "gast": "Polen",
-   "id": "401861168",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-14T19:45Z",
+   "heim": "SV Elversberg",
+   "gast": "SC Freiburg",
+   "id": "401884728",
+   "liga": "ger_1",
+   "anstoss": "2026-11-21T14:30Z",
    "tendenz": [
     3,
-    3,
-    4
+    2,
+    5
    ]
   },
   {
    "nr": 6,
-   "heim": "Portugal",
-   "gast": "Dänemark",
-   "id": "401861167",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-14T19:45Z",
+   "heim": "FC Schalke 04",
+   "gast": "VfB Stuttgart",
+   "id": "401884729",
+   "liga": "ger_1",
+   "anstoss": "2026-11-21T17:30Z",
    "tendenz": [
-    6,
+    3,
     2,
-    2
+    5
    ]
   },
   {
    "nr": 7,
-   "heim": "Österreich",
-   "gast": "Irland",
-   "id": "401861170",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-14T19:45Z",
+   "heim": "FC Augsburg",
+   "gast": "1. FSV Mainz 05",
+   "id": "401884733",
+   "liga": "ger_1",
+   "anstoss": "2026-11-22T14:30Z",
+   "tendenz": [
+    4,
+    2,
+    4
+   ]
+  },
+  {
+   "nr": 8,
+   "heim": "SV Werder Bremen",
+   "gast": "Hamburger SV",
+   "id": "401884730",
+   "liga": "ger_1",
+   "anstoss": "2026-11-22T16:30Z",
    "tendenz": [
     6,
     2,
@@ -106,81 +127,68 @@
    ]
   },
   {
-   "nr": 8,
-   "heim": "Nordirland",
-   "gast": "Ukraine",
-   "id": "401861169",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-14T19:45Z",
+   "nr": 9,
+   "heim": "FC St. Pauli",
+   "gast": "VfL Bochum 1848",
+   "id": "401885055",
+   "liga": "ger_2",
+   "anstoss": "2026-11-21T19:30Z",
    "tendenz": [
-    4,
-    3,
+    5,
+    2,
     3
    ]
   },
   {
-   "nr": 9,
-   "heim": "Zypern",
-   "gast": "Montenegro",
-   "id": "401861172",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-15T14:00Z",
-   "tendenz": [
-    3,
-    3,
-    4
-   ]
-  },
-  {
    "nr": 10,
-   "heim": "Belarus",
-   "gast": "Albanien",
-   "id": "401861173",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-15T17:00Z",
+   "heim": "1. FC Kaiserslautern",
+   "gast": "SG Dynamo Dresden",
+   "id": "401885052",
+   "liga": "ger_2",
+   "anstoss": "2026-11-22T12:30Z",
    "tendenz": [
-    3,
-    4,
+    5,
+    2,
     3
    ]
   },
   {
    "nr": 11,
-   "heim": "Frankreich",
-   "gast": "Türkei",
-   "id": "401861177",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-15T19:45Z",
+   "heim": "Karlsruher SC",
+   "gast": "VfL Osnabrück",
+   "id": "401885050",
+   "liga": "ger_2",
+   "anstoss": "2026-11-22T12:30Z",
    "tendenz": [
-    6,
-    3,
-    1
-   ]
-  },
-  {
-   "nr": 12,
-   "heim": "Belgien",
-   "gast": "Italien",
-   "id": "401861176",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-15T19:45Z",
-   "tendenz": [
-    3,
     4,
+    3,
     3
    ]
   },
   {
-   "nr": 13,
-   "heim": "Kroatien",
-   "gast": "Tschechien",
-   "id": "401861178",
-   "liga": "uefa_nations",
-   "anstoss": "2026-11-15T19:45Z",
+   "nr": 12,
+   "heim": "Energie Cottbus",
+   "gast": "Hertha BSC",
+   "id": "401885048",
+   "liga": "ger_2",
+   "anstoss": "2026-11-22T12:30Z",
    "tendenz": [
-    4,
-    4,
-    2
+    2,
+    2,
+    6
+   ]
+  },
+  {
+   "nr": 13,
+   "heim": "Sevilla FC",
+   "gast": "Real Betis Sevilla",
+   "id": "401882797",
+   "liga": "esp_1",
+   "anstoss": "2026-11-21T17:30Z",
+   "tendenz": [
+    3,
+    3,
+    4
    ]
   }
  ],
