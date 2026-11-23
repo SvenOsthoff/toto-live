@@ -1,7 +1,7 @@
 {
  "runde": {
-  "runde": "46. Wettrunde",
-  "tage": "Spieltage 21./22.11.2026"
+  "runde": "47. Wettrunde",
+  "tage": "Spieltage 28./29.11.2026"
  },
  "ligen": {
   "ger_1": {
@@ -12,101 +12,101 @@
    "slug": "ger.2",
    "name": "2. Bundesliga"
   },
-  "esp_1": {
-   "slug": "esp.1",
-   "name": "1. Liga Spanien"
+  "eng_1": {
+   "slug": "eng.1",
+   "name": "Premier League"
   }
  },
  "tage": [
-  "20261121",
-  "20261122"
+  "20261128",
+  "20261129"
  ],
  "spiele": [
   {
    "nr": 1,
-   "heim": "Borussia Mönchengladbach",
-   "gast": "Borussia Dortmund",
-   "id": "401884731",
+   "heim": "Borussia Dortmund",
+   "gast": "Bayer 04 Leverkusen",
+   "id": "401884727",
    "liga": "ger_1",
-   "anstoss": "2026-11-21T14:30Z",
+   "anstoss": "2026-11-29T18:30Z",
    "tendenz": [
+    5,
     2,
-    2,
-    6
+    3
    ]
   },
   {
    "nr": 2,
-   "heim": "Bayer 04 Leverkusen",
-   "gast": "SC Paderborn 07",
-   "id": "401884735",
+   "heim": "1. FSV Mainz 05",
+   "gast": "1. FC Union Berlin",
+   "id": "401884723",
    "liga": "ger_1",
-   "anstoss": "2026-11-21T14:30Z",
+   "anstoss": "2026-11-28T14:30Z",
    "tendenz": [
-    8,
-    1,
-    1
+    6,
+    2,
+    2
    ]
   },
   {
    "nr": 3,
-   "heim": "Eintracht Frankfurt",
-   "gast": "TSG 1899 Hoffenheim",
-   "id": "401884734",
+   "heim": "Hamburger SV",
+   "gast": "FC Bayern München",
+   "id": "401884722",
    "liga": "ger_1",
-   "anstoss": "2026-11-21T14:30Z",
+   "anstoss": "2026-11-28T14:30Z",
    "tendenz": [
-    4,
-    2,
-    4
+    1,
+    1,
+    8
    ]
   },
   {
    "nr": 4,
-   "heim": "1. FC Union Berlin",
-   "gast": "RB Leipzig",
-   "id": "401884732",
+   "heim": "1. FC Köln",
+   "gast": "SV Elversberg",
+   "id": "401884721",
    "liga": "ger_1",
-   "anstoss": "2026-11-21T14:30Z",
+   "anstoss": "2026-11-28T14:30Z",
    "tendenz": [
+    5,
     2,
-    2,
-    6
+    3
    ]
   },
   {
    "nr": 5,
-   "heim": "SV Elversberg",
-   "gast": "SC Freiburg",
-   "id": "401884728",
+   "heim": "SC Paderborn 07",
+   "gast": "FC Schalke 04",
+   "id": "401884719",
    "liga": "ger_1",
-   "anstoss": "2026-11-21T14:30Z",
+   "anstoss": "2026-11-28T14:30Z",
    "tendenz": [
+    4,
     3,
-    2,
-    5
+    3
    ]
   },
   {
    "nr": 6,
-   "heim": "FC Schalke 04",
-   "gast": "VfB Stuttgart",
-   "id": "401884729",
+   "heim": "VfB Stuttgart",
+   "gast": "Eintracht Frankfurt",
+   "id": "401884726",
    "liga": "ger_1",
-   "anstoss": "2026-11-21T17:30Z",
+   "anstoss": "2026-11-28T17:30Z",
    "tendenz": [
-    3,
+    6,
     2,
-    5
+    2
    ]
   },
   {
    "nr": 7,
-   "heim": "FC Augsburg",
-   "gast": "1. FSV Mainz 05",
-   "id": "401884733",
+   "heim": "SC Freiburg",
+   "gast": "RB Leipzig",
+   "id": "401884724",
    "liga": "ger_1",
-   "anstoss": "2026-11-22T14:30Z",
+   "anstoss": "2026-11-29T14:30Z",
    "tendenz": [
     4,
     2,
@@ -115,11 +115,11 @@
   },
   {
    "nr": 8,
-   "heim": "SV Werder Bremen",
-   "gast": "Hamburger SV",
-   "id": "401884730",
+   "heim": "TSG 1899 Hoffenheim",
+   "gast": "FC Augsburg",
+   "id": "401884725",
    "liga": "ger_1",
-   "anstoss": "2026-11-22T16:30Z",
+   "anstoss": "2026-11-29T16:30Z",
    "tendenz": [
     6,
     2,
@@ -128,67 +128,67 @@
   },
   {
    "nr": 9,
-   "heim": "FC St. Pauli",
-   "gast": "VfL Bochum 1848",
-   "id": "401885055",
+   "heim": "VfL Osnabrück",
+   "gast": "Hannover 96",
+   "id": "401885039",
    "liga": "ger_2",
-   "anstoss": "2026-11-21T19:30Z",
+   "anstoss": "2026-11-28T19:30Z",
    "tendenz": [
-    5,
-    2,
+    3,
+    4,
     3
    ]
   },
   {
    "nr": 10,
-   "heim": "1. FC Kaiserslautern",
-   "gast": "SG Dynamo Dresden",
-   "id": "401885052",
+   "heim": "1. FC Magdeburg",
+   "gast": "Energie Cottbus",
+   "id": "401885042",
    "liga": "ger_2",
-   "anstoss": "2026-11-22T12:30Z",
+   "anstoss": "2026-11-29T12:30Z",
    "tendenz": [
-    5,
-    2,
-    3
+    4,
+    4,
+    2
    ]
   },
   {
    "nr": 11,
-   "heim": "Karlsruher SC",
-   "gast": "VfL Osnabrück",
-   "id": "401885050",
+   "heim": "Eintracht Braunschweig",
+   "gast": "VfL Wolfsburg",
+   "id": "401885041",
    "liga": "ger_2",
-   "anstoss": "2026-11-22T12:30Z",
+   "anstoss": "2026-11-29T12:30Z",
    "tendenz": [
+    2,
     4,
-    3,
-    3
+    4
    ]
   },
   {
    "nr": 12,
-   "heim": "Energie Cottbus",
-   "gast": "Hertha BSC",
-   "id": "401885048",
+   "heim": "SpVgg Greuther Fürth",
+   "gast": "DSC Arminia Bielefeld",
+   "id": "401885040",
    "liga": "ger_2",
-   "anstoss": "2026-11-22T12:30Z",
-   "tendenz": [
-    2,
-    2,
-    6
-   ]
-  },
-  {
-   "nr": 13,
-   "heim": "Sevilla FC",
-   "gast": "Real Betis Sevilla",
-   "id": "401882797",
-   "liga": "esp_1",
-   "anstoss": "2026-11-21T17:30Z",
+   "anstoss": "2026-11-29T12:30Z",
    "tendenz": [
     3,
     3,
     4
+   ]
+  },
+  {
+   "nr": 13,
+   "heim": "FC Arsenal",
+   "gast": "Manchester City",
+   "id": "401878753",
+   "liga": "eng_1",
+   "anstoss": "2026-11-29T16:30Z",
+   "tendenz": [
+    5,
+    2,
+    3
    ]
   }
  ],
